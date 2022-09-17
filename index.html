@@ -5,37 +5,169 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Challenge - DOM</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: rgb(177, 191, 216);
+      }
+
+      .header {
+        padding: 30px;
+        text-align: center;
+        background: white;
+      }
+
+      .header h1 {
+        font-size: 50px;
+      }
+
+      .card {
+        background-color: white;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .kolomKiri {   
+        float: left;
+        width: 40%;
+      }
+
+      /* Right column */
+      .kolomKanan {
+        float: left;
+        width: 60%;
+        padding-left: 20px;
+      }
+
+      input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type=button] {
+        width: 100%;
+        background-color: #2f2fe0;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input[type=button]:hover {
+        background-color: #0000e4;
+      }
+
+      .listTodo {
+        background-color: #2f2fe0;
+        width: 100%;
+        color: white;
+        padding: 20px;
+      }
+
+      .listTodo:hover {
+        background-color: #0000e4;
+        width: 100%;
+        padding: 20px;
+      }
+      @media screen and (max-width: 600px) {
+      .kolomKiri, .kolomKanan {   
+        width: 100%;
+        padding: 0;
+      }
+    }
+
+    </style>
   </head>
   <body>
     <div id="app">
       <!-- TODO: Buatlah sebuah header dengan id todo-title -->
       <!-- TODO: Buatlah sebuah subtitle dengan id todo-subtitle -->
+      <div id="header" class="header">
+        <h1 id="todo-title">To-Do List</h1>
+        <h2 id="todo-subtitle">~ Today I Need To ~</h2>
+      </div>
 
       <!-- Section: input -->
       <!-- TODO: Buatlah sebuah input bertipe text dengan id todo-input -->
       <!-- TODO: Buatlah sebuah button dengan id todo-submit -->
+      <div class="row">
+        <div class="kolomKiri">  
+          <div class="card">
+            <h3 id="todo-subtitle"> </h3>
+              
+            <label for="todo-input">Input Of To-Do :</label>
+            <input type="text" id="todo-input" name="todo-input" placeholder="Your need...">
+            <input type="button" id="todo-submit" value="Submit">
+          </div>
+        </div>
 
       <!-- Section output -->
       <!-- TODO: Buatlah sebuah <ul> dengan id todo-output -->
+        <div class="kolomKanan">
+          <div class="card">
+            <h2>List of To-Do</h2>
+            <div class="listTodo">
+              <ul id="todo-output">
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ! Untuk tantangan ini, script jangan diubah ke external js yah ! -->
     <script>
       // TODO: Deklarasi variable sesuai dengan kebutuhan di sini
-      let button;
-      let input;
-      let output;
+      let button = document.getElementById("todo-submit");
+      let input = document.getElementById("todo-input");
+      let output = document.getElementById("todo-output");
+      let id;
 
       // TODO: Buatlah sebuah fungsi dengan nama fnClickHandler
       // Fungsi yang digunakan untuk menambahkan tulisan
       // Jangan ubah cara deklarasi fungsinya, cukup isi saja
-      function fnClickHandler(toDoItem) {}
+      function fnClickHandler(toDoItem) {
+        // Menambahkan sebuah element ul kedalam li / output
+        const li = document.createElement("li");
+        li.className = `todo-${input.value}`;
+        li.innerHTML = input.value.toUpperCase();
+        output.appendChild(li);
+
+        // Mengkosongkan isi dari input
+        input.value = "";
+
+      }
 
       // TODO: register event onclick / addEventListener untuk button
       // akan menjalankan fungsi fnClickHandler
+      button.addEventListener("click", fnClickHandler);
       
       // TODO: register event onkeypress / addEventListener untuk input
       // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
+
+      document.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          fnClickHandler();
+        }
+      });
     </script>
   </body>
 </html>
